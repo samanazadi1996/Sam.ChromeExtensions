@@ -7,8 +7,9 @@ for (let index = 0; index < buttons.length; index++) {
   ) {
     element.parentNode.parentNode.parentNode.click();
   }
-}`;
-var y = `
+}
+`;
+var inviteConnectionsSrc = `
  Array.from(document.querySelectorAll('span')).find(el => el.innerText === 'Invite connections').parentNode.click()
  function AddToPage() {
     var array = document.getElementsByClassName(
@@ -38,10 +39,17 @@ function myLoop() {
 myLoop();
 
  `
+var likeAllSrc=`
+var buttons = document.querySelectorAll('use[href="#thumbs-up-outline-medium"]');
+for (let index = 0; index < buttons.length; index++) {
+  const element = buttons[index];
+element.parentElement.parentElement.parentElement.parentElement.click()}
+`
 
 document.addEventListener("DOMContentLoaded", function () {
     var addConnectionsButton = document.getElementById("addConnectionsButton");
     var inviteConnectionsButton = document.getElementById("InviteConnectionsButton");
+    var likeAllButton = document.getElementById("LikeAll");
 
     chrome.tabs.executeScript(null, {
         code: `Array.from(document.querySelectorAll('span')).find(el => el.innerText === 'Invite connections')`
@@ -68,7 +76,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     inviteConnectionsButton.addEventListener("click", function () {
         chrome.tabs.executeScript(null, {
-            code: y
+            code: inviteConnectionsSrc
+
+        }, response => {
+            const pageData = response[0];
+
+            if (!pageData) {
+                console.log("Could not get data from page.");
+                return;
+            }
+        });
+    });
+    likeAllButton.addEventListener("click", function () {
+        chrome.tabs.executeScript(null, {
+            code: likeAllSrc
 
         }, response => {
             const pageData = response[0];
