@@ -38,6 +38,7 @@ margin-bottom:10px ;
     border: none;
     transition: all 0.3s ease;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 .btn-9:after {
